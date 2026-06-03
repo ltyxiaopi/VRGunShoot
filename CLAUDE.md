@@ -78,7 +78,12 @@
 - 提交信息用英文，简洁描述变更目的
 - Codex 只 push 分支**不建 PR**；审查通过后 Claude 给 compare URL + 标题 + 正文，用户手动建并 merge
 - **不用 `gh` CLI**，**不本地 merge 到主分支**
-- **push 走代理**：直连 GitHub 不通，Codex push 前需设代理 —— `git config --local http.proxy socks5://127.0.0.1:7897`（仅对本仓库生效）
+- **push 走代理**：直连 GitHub 不通。Codex clone 后 push/fetch 前必须配代理 —— **注意是 `socks5h` 不是 `socks5`**（用 `socks5` 会本地 DNS 解析失败 → TLS 握手 `unexpected eof`）：
+  ```
+  git config --local http.proxy socks5h://127.0.0.1:7897
+  git config --local https.proxy socks5h://127.0.0.1:7897
+  ```
+  代理偶发 TLS eof 抖动，失败重试 1-2 次即可。
 
 ## 文档结构
 ```
