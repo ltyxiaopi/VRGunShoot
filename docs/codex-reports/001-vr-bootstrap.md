@@ -11,7 +11,7 @@
 - Created `Assets/Scenes/Range.unity` from the clean VR template baseline.
 - Added `FiringPoint`, `TargetAnchor_100m`, and `TargetAnchor_200m` using real 1 unit = 1m placement.
 - Added temporary cube visuals under the 100m and 200m target anchors.
-- Imported the XRI `XR Device Simulator` sample and placed the actual `XR Device Simulator` prefab in `Range`.
+- Imported the XRI `XR Device Simulator` sample and configured the project to rely on editor-only automatic simulator instantiation.
 - Set `Range` as Build Settings scene index 0.
 
 ## Changed Files
@@ -27,14 +27,18 @@
 - Unity batchmode validation on a D-drive temporary project copy completed with return code 0.
 - Validation opened `Assets/Scenes/Range.unity`.
 - Confirmed `Range` is Build Settings scene 0.
-- Confirmed required objects exist: `FiringPoint`, `TargetAnchor_100m`, `TargetAnchor_200m`, `XR Origin (XR Rig)`, `XR Interaction Manager`, `RangeGround_220m`, and `XR Device Simulator`.
+- Confirmed required objects exist: `FiringPoint`, `TargetAnchor_100m`, `TargetAnchor_200m`, `XR Origin (XR Rig)`, `XR Interaction Manager`, and `RangeGround_220m`.
 - Confirmed `TargetAnchor_100m` is 100m from `FiringPoint`.
 - Confirmed `TargetAnchor_200m` is 200m from `FiringPoint`.
-- Confirmed the scene `XR Device Simulator` object has the real `UnityEngine.XR.Interaction.Toolkit.Inputs.Simulation.XRDeviceSimulator` component.
 - Confirmed `XRDeviceSimulatorSettings` enables editor-only automatic simulator instantiation and resolves the simulator prefab reference.
 
+## Rework R1
+- Removed the manually placed `XR Device Simulator` prefab instance from `Assets/Scenes/Range.unity`.
+- Kept `Assets/XRI/Settings/Resources/XRDeviceSimulatorSettings.asset` on editor-only automatic instantiation: `m_AutomaticallyInstantiateSimulatorPrefab: 1` and `m_AutomaticallyInstantiateInEditorOnly: 1`.
+- Play Mode self-test confirmed `FindObjectsByType<XRDeviceSimulator>` returns exactly `1` simulator instance.
+
 ## Claude Code Review Focus
-- Check whether keeping both the scene simulator instance and the project setting auto-instantiation is preferred, or whether future tasks should rely on only one path.
+- Check that the automatic simulator instance is usable for keyboard/mouse movement, head rotation, and left/right controller rays in Play Mode.
 - Check that the temporary target cube scale and ground dimensions are acceptable for upcoming ballistics/target work.
 
 ## Notes

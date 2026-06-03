@@ -5,7 +5,6 @@
 ## 待实现 (TODO)
 
 ### 阶段 1 · 核心枪械系统（三模块共用，MVP）
-- [001 - VR 基础跑通](tasks/001-vr-bootstrap.md) — XR Origin + Device Simulator 编辑器可操作 + Assets/Scripts 目录骨架
 - [002 - 步枪 + 双手持枪抓取](tasks/002-rifle-grab.md) 🎨 — XRI 抓取、持枪姿态
 - [003 - 机械瞄具 + 三点一线](tasks/003-iron-sights.md) — 觇孔/准星几何、柱顶压靶心判定、射线开火
 - [004 - 弹道/命中系统](tasks/004-ballistics.md) — 射线→命中点→弹着点，预留可注入 `zeroOffset`
@@ -35,7 +34,7 @@
 暂无
 
 ## 审查中 (In Review)
-暂无
+- [001 - VR 基础跑通](tasks/001-vr-bootstrap.md) — 首轮审查 0 编译错误、结构达标，**返工 R1**（双 Simulator，见规格书「审查返工」）→ 待 Codex 修后复审
 
 ## 已完成 (Done)
 - 000 - 项目脚手架（Claude 直接铺：CLAUDE.md + docs 结构 + 模板 + 设计/架构文档）
