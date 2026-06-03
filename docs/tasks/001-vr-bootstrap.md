@@ -48,3 +48,14 @@
 
 ## 交付记录（Codex 必填）
 完成并自测后，push 分支前在 `docs/codex-reports/001-vr-bootstrap.md` 写交付记录（参考 `docs/codex-reports/README.md`）。创建 `feature/001-vr-bootstrap` 分支并 push，**不要创建 PR**，等 Claude 审查。
+
+## 审查返工 (Rework · Claude 2026-06-03)
+首轮审查：结构/坐标/距离/Build Settings/asmdef/Device Simulator vendor 全部达标，MCP 编译验证 0 编译错误。**1 处需修后再审：**
+
+### R1 — Simulator 双重实例化（必修）
+- **现象**：`Assets/XRI/Settings/Resources/XRDeviceSimulatorSettings.asset` 里 `m_AutomaticallyInstantiateSimulatorPrefab: 1`（编辑器 Play 时自动生成 Simulator 实例），**同时** `Range.unity` 里又手动摆了一个 `XR Device Simulator` 实例（prefab guid `18ddb545287c546e19cc77dc9fbb2189`）。进 Play 后会同时存在两个 Simulator 抢输入，键鼠模拟手柄/头显会异常或叠加。
+- **修法（二选一，**采用方案 A**）**：
+  - **方案 A（采用）**：保留项目设置的自动实例化（editor-only、跨场景通用，后续每个新场景都不必再摆），**删掉 `Range.unity` 里手动摆放的那个 `XR Device Simulator` GameObject 实例**。`XRDeviceSimulatorSettings.asset` 维持 `m_AutomaticallyInstantiateSimulatorPrefab: 1` / `m_AutomaticallyInstantiateInEditorOnly: 1` 不变。
+  - 方案 B（不采用）：反过来——保留场景实例，把设置的自动实例化关掉。因后续会有多个场景，A 更省事，故定 A。
+- **自测**：改完进 Play，确认场景里**只有一个** `XRDeviceSimulator` 组件实例（可 `FindObjectsByType<XRDeviceSimulator>` 计数 == 1），键鼠能移动/转头、左右手柄射线正常。
+- **交付**：在 `codex-reports/001-vr-bootstrap.md` 追加「Rework R1」小节说明改动与自测结果，push 到原分支 `feature/001-vr-bootstrap`，等 Claude 复审 + Play 实测。
